@@ -1,0 +1,37 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Large Model Weights and Checkpoints
+models/
+procurement_llama3_final/
+procurement_llama3_merged/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.gguf
+
+# Unsloth / Hugging Face Caches
+.cache/
+hf_cache/
+wandb/
+
+# Environment Variables & Secrets (Keep your HF token safe)
+.env
+*.env.local
+
+# Operating System & IDE Files
+.DS_Store
+.vscode/
+.idea/
+
+# Database files
+*.db
+*.sqlite3
