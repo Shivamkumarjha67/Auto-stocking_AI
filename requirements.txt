@@ -1,13 +1,22 @@
 # Agent Orchestration & State Machine
 langgraph>=0.0.30
 langchain>=0.1.15
+langchain-core>=0.1.40
 langchain-community>=0.0.30
+
+# Mistral Integration
+langchain-mistralai>=0.1.0
 
 # Vector Database & RAG Retrieval
 chromadb>=0.4.24
-sentence-transformers>=2.6.0
+langchain-chroma>=0.1.0
 rank-bm25>=0.2.2
+pymupdf>=1.24.0
 pypdf>=4.1.0
+sentence-transformers>=2.6.0
+
+# Document & PDF Generation
+reportlab>=4.0.0
 
 # Backend API & Server
 fastapi>=0.110.0
@@ -18,3 +27,6 @@ pydantic>=2.6.0
 transformers>=4.40.0
 torch>=2.2.0
 accelerate>=0.28.0
+
+# Testing & Validation
+pytest>=8.0.0
