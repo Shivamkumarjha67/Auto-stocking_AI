@@ -43,6 +43,8 @@ Implemented a production-grade Hybrid Retrieval-Augmented Generation (RAG) syste
 
 Verified through automated `pytest` test suites, confirming high recall on exact SKU queries (`SKU-1001`), conceptual policy limits ($5,000 threshold), and vendor-scoped lookups[cite: 1, 4].
 
+![Indexing screenshot](screenshots/image.png)
+
 ## 4. Establishing the Agentic Pipeline & API Summary
 
 AutoStock-AI features an autonomous, multi-agent procurement and inventory replenishment system built on a cyclic **LangGraph** state machine and exposed via **FastAPI** with interactive **Swagger UI** documentation.
@@ -54,6 +56,12 @@ AutoStock-AI features an autonomous, multi-agent procurement and inventory reple
 3. **Reasoning & PO Generation (`po_generator`)**: Integrates a locally fine-tuned model served via vLLM to evaluate vendor constraints, apply lead-time overrides for critical items, and output valid JSON purchase order drafts.
 4. **Policy Enforcement Gate (`human_review`)**: Evaluates financial compliance, auto-executing eligible orders while routing transactions exceeding the $5,000 threshold to a persistent `pending_review` queue.
 
+![Getting the HIML triggered if any autonomous procurement breaches the guided threshold.](screenshots/image-5.png)
+
+![For HITL, have options all required decision options to make.(Manipulate the quantity, Accept or Reject the order.)](screenshots/image-3.png)
+
+![Directly getting approved for procurement as well, using Fine-tuned LLM with the supplier. ](screenshots/image-4.png)
+
 ### FastAPI & Swagger Integration
 
 The compiled workflow is deployed as a RESTful service exposing key operational endpoints:
@@ -62,6 +70,9 @@ The compiled workflow is deployed as a RESTful service exposing key operational 
 - `POST /trigger-replenishment`: Executes the end-to-end multi-agent replenishment loop on demand.
 - `POST /approve-po`: Enables Human-in-the-Loop (HITL) resolution to approve, modify, or reject pending orders.
 - `GET /docs`: Interactive Swagger interface for live payload testing and workflow inspection.
+
+![Keeping Track of live inventory.](screenshots/image-1.png)
+![Also you can update provide the updated inventory data to keep track of it, based on that whole automated pipeline executes.](screenshots/image-2.png)
 
 ## 5. Project Directory Structure
 

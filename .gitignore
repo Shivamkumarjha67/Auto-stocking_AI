@@ -35,3 +35,8 @@ wandb/
 # Database files
 *.db
 *.sqlite3
+*.json
+*.jsonl
+
+
+commands.txt

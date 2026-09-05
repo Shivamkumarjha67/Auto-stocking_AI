@@ -26,23 +26,25 @@ def build_vector_store() -> Chroma:
 
     embeddings = get_embedding_model()
 
-    # Re-initialize vectorstore safely using Chroma's built-in client
     vectorstore = Chroma(
         collection_name=COLLECTION_NAME,
         embedding_function=embeddings,
         persist_directory=CHROMA_DIR
     )
 
-    # Delete existing documents in the collection to rebuild cleanly
-    existing_ids = vectorstore.get()["ids"]
-    if existing_ids:
-        print(f"Clearing {len(existing_ids)} existing entries from '{COLLECTION_NAME}' collection...")
-        vectorstore.delete(ids=existing_ids)
+    # Clean rebuild
+    existing = vectorstore.get()
+    if existing and existing.get("ids"):
+        print(f"Clearing {len(existing['ids'])} existing entries from '{COLLECTION_NAME}' collection...")
+        vectorstore.delete(ids=existing["ids"])
 
     print("Embedding chunks via Mistral ('mistral-embed') and indexing into ChromaDB...")
     vectorstore.add_documents(chunks)
     print(f"ChromaDB persistent store updated successfully at '{CHROMA_DIR}'.")
     return vectorstore
+
+# Alias so app.main can import it
+index_procurement_documents = build_vector_store
 
 if __name__ == "__main__":
     build_vector_store()
