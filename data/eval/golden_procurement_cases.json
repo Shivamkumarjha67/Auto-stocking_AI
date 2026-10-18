@@ -1,0 +1,233 @@
+[
+  {
+    "id": "CASE-01",
+    "description": "Critical stockout of Lithium-Ion Battery Pack with <3 days runway. Requires fast lead time override to TechCorp (VEND-001).",
+    "query": "What are the volume pricing tiers, lead times, and MOQs for SKU-1003?",
+    "expected_sku": "SKU-1003",
+    "expected_retrieval_keywords": ["SKU-1003", "VEND-001", "Lithium-Ion"],
+    "inventory_state": {
+      "sku": "SKU-1003",
+      "item_name": "Lithium-Ion Battery Pack",
+      "category": "Electronics",
+      "current_stock": 18,
+      "reorder_point": 140,
+      "daily_sales_rate": 10.0,
+      "runway_days": 1.8,
+      "urgency": "Critical"
+    },
+    "expected_decision": {
+      "vendor_id": "VEND-001",
+      "min_quantity": 122,
+      "action_type": "pending_review",
+      "reasoning_contains": "Critical"
+    }
+  },
+  {
+    "id": "CASE-02",
+    "description": "Watch status for Optical Sensor with 11.8 days runway. Non-critical, lowest cost vendor GlobalParts (VEND-002) should be selected.",
+    "query": "What are the volume pricing tiers, lead times, and MOQs for SKU-1001?",
+    "expected_sku": "SKU-1001",
+    "expected_retrieval_keywords": ["SKU-1001", "VEND-002", "Optical Sensor"],
+    "inventory_state": {
+      "sku": "SKU-1001",
+      "item_name": "Optical Sensor",
+      "category": "Electronics",
+      "current_stock": 95,
+      "reorder_point": 112,
+      "daily_sales_rate": 8.0,
+      "runway_days": 11.8,
+      "urgency": "Watch"
+    },
+    "expected_decision": {
+      "vendor_id": "VEND-002",
+      "min_quantity": 100,
+      "action_type": "execute_po",
+      "reasoning_contains": "lowest-cost"
+    }
+  },
+  {
+    "id": "CASE-03",
+    "description": "Watch status for NEMA 17 Stepper Motor in Hardware. Lowest cost vendor is Apex Supply Co (VEND-003).",
+    "query": "What are the volume pricing tiers, lead times, and MOQs for SKU-2001?",
+    "expected_sku": "SKU-2001",
+    "expected_retrieval_keywords": ["SKU-2001", "VEND-003", "Stepper Motor"],
+    "inventory_state": {
+      "sku": "SKU-2001",
+      "item_name": "NEMA 17 Stepper Motor",
+      "category": "Hardware",
+      "current_stock": 70,
+      "reorder_point": 84,
+      "daily_sales_rate": 6.0,
+      "runway_days": 11.6,
+      "urgency": "Watch"
+    },
+    "expected_decision": {
+      "vendor_id": "VEND-003",
+      "min_quantity": 50,
+      "action_type": "execute_po",
+      "reasoning_contains": "VEND-003"
+    }
+  },
+  {
+    "id": "CASE-04",
+    "description": "Watch status for Timing Belt GT2 in Hardware. Sized to restore 14-day buffer without exceeding $5,000 threshold.",
+    "query": "What are the volume pricing tiers, lead times, and MOQs for SKU-2005?",
+    "expected_sku": "SKU-2005",
+    "expected_retrieval_keywords": ["SKU-2005", "Timing Belt"],
+    "inventory_state": {
+      "sku": "SKU-2005",
+      "item_name": "Timing Belt GT2",
+      "category": "Hardware",
+      "current_stock": 230,
+      "reorder_point": 252,
+      "daily_sales_rate": 18.0,
+      "runway_days": 12.7,
+      "urgency": "Watch"
+    },
+    "expected_decision": {
+      "vendor_id": "VEND-002",
+      "min_quantity": 200,
+      "action_type": "execute_po",
+      "reasoning_contains": "MOQ"
+    }
+  },
+  {
+    "id": "CASE-05",
+    "description": "Critical stockout for Microcontroller Board with 2.0 days runway. Requires TechCorp fast lead time override.",
+    "query": "What are the volume pricing tiers, lead times, and MOQs for SKU-1002?",
+    "expected_sku": "SKU-1002",
+    "expected_retrieval_keywords": ["SKU-1002", "VEND-001"],
+    "inventory_state": {
+      "sku": "SKU-1002",
+      "item_name": "Microcontroller Board",
+      "category": "Electronics",
+      "current_stock": 30,
+      "reorder_point": 210,
+      "daily_sales_rate": 15.0,
+      "runway_days": 2.0,
+      "urgency": "Critical"
+    },
+    "expected_decision": {
+      "vendor_id": "VEND-001",
+      "min_quantity": 180,
+      "action_type": "execute_po",
+      "reasoning_contains": "Critical"
+    }
+  },
+  {
+    "id": "CASE-06",
+    "description": "High value order exceeding $5,000 ceiling. Must be routed to pending_review.",
+    "query": "What is the autonomous spending limit and approval threshold in internal procurement policy?",
+    "expected_sku": "SKU-1004",
+    "expected_retrieval_keywords": ["$5,000", "spending limit", "approval"],
+    "inventory_state": {
+      "sku": "SKU-1004",
+      "item_name": "USB-C Interface Module",
+      "category": "Electronics",
+      "current_stock": 50,
+      "reorder_point": 350,
+      "daily_sales_rate": 120.0,
+      "runway_days": 0.4,
+      "urgency": "Critical"
+    },
+    "expected_decision": {
+      "vendor_id": "VEND-001",
+      "min_quantity": 1600,
+      "action_type": "pending_review",
+      "reasoning_contains": "spending limit"
+    }
+  },
+  {
+    "id": "CASE-07",
+    "description": "Hardware Linear Rail 300mm standard reorder checking VEND-003 pricing.",
+    "query": "What are the volume pricing tiers, lead times, and MOQs for SKU-2002?",
+    "expected_sku": "SKU-2002",
+    "expected_retrieval_keywords": ["SKU-2002", "Linear Rail"],
+    "inventory_state": {
+      "sku": "SKU-2002",
+      "item_name": "Linear Rail 300mm",
+      "category": "Hardware",
+      "current_stock": 40,
+      "reorder_point": 70,
+      "daily_sales_rate": 5.0,
+      "runway_days": 8.0,
+      "urgency": "Watch"
+    },
+    "expected_decision": {
+      "vendor_id": "VEND-003",
+      "min_quantity": 50,
+      "action_type": "execute_po",
+      "reasoning_contains": "VEND-003"
+    }
+  },
+  {
+    "id": "CASE-08",
+    "description": "Ball Bearing reorder with very low unit cost meeting large MOQ constraint.",
+    "query": "What are the volume pricing tiers, lead times, and MOQs for SKU-2004?",
+    "expected_sku": "SKU-2004",
+    "expected_retrieval_keywords": ["SKU-2004", "Ball Bearing"],
+    "inventory_state": {
+      "sku": "SKU-2004",
+      "item_name": "Ball Bearing 8mm",
+      "category": "Hardware",
+      "current_stock": 400,
+      "reorder_point": 560,
+      "daily_sales_rate": 40.0,
+      "runway_days": 10.0,
+      "urgency": "Watch"
+    },
+    "expected_decision": {
+      "vendor_id": "VEND-002",
+      "min_quantity": 250,
+      "action_type": "execute_po",
+      "reasoning_contains": "MOQ"
+    }
+  },
+  {
+    "id": "CASE-09",
+    "description": "Aluminum Extrusion reorder comparing VEND-002 bulk discount vs VEND-003 faster delivery.",
+    "query": "What are the volume pricing tiers, lead times, and MOQs for SKU-2003?",
+    "expected_sku": "SKU-2003",
+    "expected_retrieval_keywords": ["SKU-2003", "Aluminum Extrusion"],
+    "inventory_state": {
+      "sku": "SKU-2003",
+      "item_name": "Aluminum Extrusion 2020",
+      "category": "Hardware",
+      "current_stock": 200,
+      "reorder_point": 280,
+      "daily_sales_rate": 20.0,
+      "runway_days": 10.0,
+      "urgency": "Watch"
+    },
+    "expected_decision": {
+      "vendor_id": "VEND-002",
+      "min_quantity": 250,
+      "action_type": "execute_po",
+      "reasoning_contains": "VEND-002"
+    }
+  },
+  {
+    "id": "CASE-10",
+    "description": "OLED Display reorder in Electronics under Watch status.",
+    "query": "What are the volume pricing tiers, lead times, and MOQs for SKU-1005?",
+    "expected_sku": "SKU-1005",
+    "expected_retrieval_keywords": ["SKU-1005", "OLED Display"],
+    "inventory_state": {
+      "sku": "SKU-1005",
+      "item_name": "OLED Display 128x64",
+      "category": "Electronics",
+      "current_stock": 120,
+      "reorder_point": 168,
+      "daily_sales_rate": 12.0,
+      "runway_days": 10.0,
+      "urgency": "Watch"
+    },
+    "expected_decision": {
+      "vendor_id": "VEND-002",
+      "min_quantity": 150,
+      "action_type": "execute_po",
+      "reasoning_contains": "VEND-002"
+    }
+  }
+]
+

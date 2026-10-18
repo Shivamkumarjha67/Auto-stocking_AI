@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-10-18 21:14:02",
+  "total_evaluated_cases": 10,
+  "retrieval_benchmarks": {
+    "Dense Only": {
+      "Hit Rate@3": "100.0%",
+      "MRR": 0.95
+    },
+    "BM25 Only": {
+      "Hit Rate@3": "100.0%",
+      "MRR": 0.85
+    },
+    "Hybrid RRF (AutoStock-AI)": {
+      "Hit Rate@3": "100.0%",
+      "MRR": 0.85
+    }
+  },
+  "agent_decision_benchmarks": {
+    "Vendor Selection Accuracy": "80.0%",
+    "MOQ Adherence Rate": "100.0%",
+    "Policy Gatekeeper Compliance": "100.0%",
+    "Arithmetic Precision": "100.0%",
+    "Avg Latency (s)": 16.39,
+    "P95 Latency (s)": 18.57
+  },
+  "engine_telemetry_profiles": {
+    "cloud_saas_mistral_small": {
+      "engine_type": "Hosted Commercial Cloud API",
+      "model": "mistral-small-latest",
+      "avg_latency_seconds": 16.39,
+      "cost_per_po_usd": 0.000141,
+      "cost_per_1000_pos_usd": 0.141,
+      "data_privacy": "Third-Party Cloud API"
+    },
+    "edge_colab_vllm_finetuned": {
+      "engine_type": "Fine-Tuned LLaMA 3.2 3B via Colab / vLLM (ngrok)",
+      "model": "procurement-llama-finetuned",
+      "avg_latency_seconds": 8.49,
+      "cost_per_po_usd": 0.0,
+      "cost_per_1000_pos_usd": 0.0,
+      "data_privacy": "100% Dedicated / Zero Commercial Cloud Egress"
+    }
+  }
+}

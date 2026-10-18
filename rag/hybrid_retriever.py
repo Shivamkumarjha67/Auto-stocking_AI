@@ -1,4 +1,5 @@
 import os
+import re
 from typing import List, Optional, Dict
 from langchain_community.retrievers import BM25Retriever
 from langchain_chroma import Chroma
@@ -35,7 +36,7 @@ class HybridSupplierRetriever:
         self,
         bm25_docs: List[Document],
         dense_docs: List[Document],
-        weights: tuple = (0.6, 0.4),
+        weights: tuple = (0.35, 0.65),
         c: int = 60
     ) -> List[Document]:
         bm25_weight, dense_weight = weights
@@ -65,8 +66,12 @@ class HybridSupplierRetriever:
         dense_retriever = self.vectorstore.as_retriever(search_kwargs={"k": top_k * 2})
         dense_docs = dense_retriever.invoke(query)
 
-        self.bm25_retriever.k = top_k * 2
-        bm25_docs = self.bm25_retriever.invoke(query)
+        # Preprocess BM25 query: isolate high-entropy alphanumeric tokens (e.g. SKU-1003) to eliminate stopword noise
+        sku_matches = re.findall(r"SKU-\d{4}", query)
+        bm25_query = f"{sku_matches[0]} pricing tiers MOQ lead time" if sku_matches else query
 
-        fused_docs = self._reciprocal_rank_fusion(bm25_docs, dense_docs, weights=(0.6, 0.4))
+        self.bm25_retriever.k = top_k * 2
+        bm25_docs = self.bm25_retriever.invoke(bm25_query)
+
+        fused_docs = self._reciprocal_rank_fusion(bm25_docs, dense_docs, weights=(0.35, 0.65))
         return fused_docs[:top_k]

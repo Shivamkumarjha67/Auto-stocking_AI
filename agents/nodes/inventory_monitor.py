@@ -2,6 +2,12 @@ from agents.state import ReplenishmentState
 from agents.tools.erp_sql_tool import scan_reorder_triggers
 
 def inventory_monitor_node(state: ReplenishmentState) -> dict:
+    if state.get("active_item"):
+        return {
+            "low_stock_items": state.get("low_stock_items", [state["active_item"]]),
+            "active_item": state["active_item"]
+        }
+
     triggered = scan_reorder_triggers()
     if not triggered:
         return {

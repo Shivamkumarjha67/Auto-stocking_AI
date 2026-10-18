@@ -1,3 +1,4 @@
+import time
 from agents.state import ReplenishmentState
 from rag.hybrid_retriever import HybridSupplierRetriever
 
@@ -8,11 +9,13 @@ def supplier_matcher_node(state: ReplenishmentState) -> dict:
     if not item:
         return {}
 
+    t0 = time.perf_counter()
     sku = item["sku"]
     # 1. Retrieve contract terms for SKU
     contract_docs = retriever.retrieve(f"What are the volume pricing tiers, lead times, and MOQs for {sku}?", top_k=4)
     # 2. Retrieve internal policy constraints
     policy_docs = retriever.retrieve("autonomous purchase order spending limit and runway rules", top_k=2)
+    retrieval_ms = round((time.perf_counter() - t0) * 1000, 2)
 
     terms = [
         {"source": d.metadata.get("source"), "content": d.page_content, "vendor_id": d.metadata.get("supplier_id")}
@@ -20,7 +23,11 @@ def supplier_matcher_node(state: ReplenishmentState) -> dict:
     ]
     policy_text = "\n".join([d.page_content for d in policy_docs])
 
+    existing_telemetry = state.get("telemetry") or {}
+    existing_telemetry["retrieval_time_ms"] = retrieval_ms
+
     return {
         "retrieved_supplier_terms": terms,
-        "procurement_policy_context": policy_text
+        "procurement_policy_context": policy_text,
+        "telemetry": existing_telemetry
     }

@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  autostock-api:
+    build: .
+    container_name: autostock-api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+      - USE_LOCAL_MODEL=false
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  autostock-ui:
+    build: .
+    container_name: autostock-ui
+    command: streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    environment:
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+    depends_on:
+      - autostock-api
+    restart: unless-stopped

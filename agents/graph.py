@@ -49,7 +49,8 @@ if __name__ == "__main__":
         "po_draft": None,
         "action_type": "pending_review",
         "reasoning": "",
-        "approval_granted": False
+        "approval_granted": False,
+        "telemetry": None
     }
     result = agent_app.invoke(initial_state)
     print("\n=== AGENT EXECUTION SUMMARY ===")

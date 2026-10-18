@@ -1,5 +1,15 @@
 import pytest
 from agents.graph import build_autostock_agent
+from agents.tools.erp_sql_tool import get_db_connection
+
+@pytest.fixture(autouse=True)
+def reset_db():
+    conn = get_db_connection()
+    with open("data/mock_db/schema.sql", "r", encoding="utf-8") as f:
+        conn.executescript(f.read())
+    with open("data/mock_db/seed_data.sql", "r", encoding="utf-8") as f:
+        conn.executescript(f.read())
+    conn.close()
 
 @pytest.fixture(scope="module")
 def agent():
@@ -40,3 +50,9 @@ def test_critical_item_prioritization(agent):
     else:
         assert result["action_type"] == "execute_po"
         assert result["approval_granted"] is True
+
+    # 4. Verification of Telemetry Tracking
+    assert "telemetry" in result
+    assert result["telemetry"] is not None
+    assert result["telemetry"]["execution_time_ms"] > 0
+    assert result["telemetry"]["total_tokens"] > 0

@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+process_demo_video.py
+reset_db.py
 
 # Virtual environments
 venv/
@@ -35,8 +37,21 @@ wandb/
 # Database files
 *.db
 *.sqlite3
-*.json
 *.jsonl
 
+# Eval data exceptions
+!data/eval/*.json
+!docs/*.json
 
-commands.txt
+# Large media files
+*.raw.mp4
+*.mov
+*.avi
+*.mkv
+docs/assets/temp_frames/
+
+# Top-level notes
+/commands.txt
+/INTERVIEW_PREP.md
+/demo_recording_guide.md
+/failure_analysis_guide.md
